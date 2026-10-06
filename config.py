@@ -27,11 +27,21 @@ TOKEN: Optional[str] = os.getenv("SERVER_TOKEN")
 GUILD_ID: int = int(os.getenv("GUILD_ID", "1529545898294509589"))
 SUNUCU_ADI: str = "Piyade RP | Los Angeles"
 
-# ER:LC & Roblox Entegrasyon Anahtarları
+# =====================================================================
+# ER:LC OYUN SUNUCUSU ENTEGRASYON AYARLARI
+# =====================================================================
+# Oyun sunucusuyla iletişim için ERLC_API_KEY kullanılır (Grup bağlantısı devre dışıdır)
 ERLC_API_KEY: str = os.getenv("ERLC_API_KEY", "").strip()
-ROBLOX_API_KEY: str = os.getenv("ROBLOX_API_KEY", "").strip()
-ROBLOX_GRUP_ID: int = int(os.getenv("ROBLOX_GRUP_ID", "860635623"))
-ROBLOX_GRUP_LINK: str = "https://www.roblox.com/share/g/860635623"
+ERLC_BASE_URL: str = "https://api.erlc.gg/v2"
+ERLC_SUNUCU_KODU: str = os.getenv("ERLC_SUNUCU_KODU", "piyade")
+
+# =====================================================================
+# TEKİL VERİ DOSYASI (ARAÇ SİSTEMİ & ARAÇ LOGLARI)
+# =====================================================================
+BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR: str = os.path.join(BASE_DIR, "data")
+ARAC_DATA_FILE: str = os.path.join(DATA_DIR, "arac_data.json")
+
 
 # =====================================================================
 # ROLLER (Adları, ID'leri ve Gruplandırılmış Sabitleri)

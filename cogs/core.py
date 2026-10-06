@@ -50,5 +50,37 @@ class CoreCog(commands.Cog):
         embed.set_footer(text=f"{SUNUCU_ADI} • Altyapı Aktif")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
+    @app_commands.command(name="oyun-durum", description="ER:LC oyun sunucusunun anlık durumunu ve oyuncu sayısını sorgular.")
+    async def oyun_durum_command(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+        from utils.erlc import get_server_info
+
+        info = await get_server_info()
+        if not info:
+            embed = discord.Embed(
+                title="❌ ER:LC Sunucu Durumu",
+                description="Oyun sunucusuna ulaşılamadı veya `ERLC_API_KEY` geçersiz/tanımsız.",
+                color=Colors.DANGER
+            )
+            return await interaction.followup.send(embed=embed, ephemeral=True)
+
+        current_players = info.get("CurrentPlayers", 0)
+        max_players = info.get("MaxPlayers", 40)
+        queue = info.get("Queue", [])
+        queue_count = len(queue) if isinstance(queue, list) else int(queue or 0)
+        server_name = info.get("Name", SUNUCU_ADI)
+
+        embed = discord.Embed(
+            title=f"🎮 ER:LC Sunucu Durumu • {server_name}",
+            color=Colors.SUCCESS if current_players > 0 else Colors.PRIMARY
+        )
+        embed.add_field(name="👥 Aktif Oyuncu", value=f"`{current_players}` / `{max_players}`", inline=True)
+        embed.add_field(name="⏳ Kuyrukta Bekleyen", value=f"`{queue_count}` kişi", inline=True)
+        embed.add_field(name="🛡️ Durum", value="`🟢 Çevrimiçi (Aktif)`", inline=True)
+        embed.set_footer(text=f"{SUNUCU_ADI} • ER:LC Canlı Entegrasyon")
+
+        await interaction.followup.send(embed=embed, ephemeral=True)
+
 async def setup(bot: commands.Bot):
     await bot.add_cog(CoreCog(bot))
+
