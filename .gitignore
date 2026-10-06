@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Ortam Değişkenleri & Gizli Dosyalar
+.env
+.env.local
+
+# Veri geçici dosyaları (Atomic replacement koruması)
+*.tmp
+data/*.tmp
+
+# IDE / Editör
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
